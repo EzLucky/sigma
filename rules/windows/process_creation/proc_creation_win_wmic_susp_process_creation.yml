@@ -24,7 +24,7 @@ detection:
             - 'call '
             - 'create '
         CommandLine|contains:
-            # Add more susupicious paths and binaries as you see fit in your env
+            # Add more suspicious paths and binaries as you see fit in your env
             - 'rundll32'
             - 'bitsadmin'
             - 'regsvr32'
