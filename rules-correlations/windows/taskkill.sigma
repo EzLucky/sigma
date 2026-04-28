@@ -19,7 +19,7 @@ detection:
         - Image|endswith: '\taskkill.exe'
     selection_cli:
         CommandLine|windash|contains:
-            #  - '/PID'  too many hits
+            # - '/PID' --> too many hits
             - '/IM'  # Image Name
             - '/FI'  # Filter, allow wildcard usage
     condition: all of selection_*
