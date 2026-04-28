@@ -36,6 +36,7 @@ correlation:
     - proc_creation_win_taskkill_process_termination
   group-by:
     - Computer
+    - Image
   timespan: 15m
   condition:
     gte: 10
