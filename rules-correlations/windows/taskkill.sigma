@@ -18,7 +18,6 @@ detection:
         CommandLine|windash|contains|all:
             - 'taskkill'
             - '/im'
-            - '/f'
     condition: selection
 ---
 title: Suspicious Mass Process Termination via Taskkill
