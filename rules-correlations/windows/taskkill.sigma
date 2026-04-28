@@ -44,14 +44,55 @@ logsource:
 detection:
     selection_img:
         - OriginalFileName:
-              - 'PowerShell.EXE'
+              - 'powershell.exe'
+              - 'powershell_ise.exe'
               - 'pwsh.dll'
         - Image|endswith:
               - '\powershell.exe'
+              - '\powershell_ise.exe'
               - '\pwsh.exe'
     selection_cli:
-        CommandLine|contains: 'Stop-Service '
+        CommandLine|contains: 'Stop-Process '
     condition: all of selection_*
+level: low
+---
+title: Process Termination via PowerShell WMI cmdlet
+id: b0186425-b9b5-4559-a5d5-d1cef7aaa475
+name: proc_creation_win_powershell_wmi_cmdlet_process_termination
+status: test
+description: todo, just powershell used to terminate a process.
+references:
+    - https://research.checkpoint.com/2026/dfir-report-the-gentlemen/
+author: Luc Génaux
+date: 2026-04-28
+tags:
+    - attack.defense-evasion
+    - attack.t1562.001
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_img:
+        - OriginalFileName:
+              - 'powershell.exe'
+              - 'powershell_ise.exe'
+              - 'pwsh.dll'
+        - Image|endswith:
+              - '\powershell.exe'
+              - '\powershell_ise.exe'
+              - '\pwsh.exe'
+    selection_psh_wmi_method:
+        process|contains|all: 
+            - 'Get-WmiObject '
+            - 'Win32_Process'
+            - '.Terminate()'
+    selection_psh_cim_method:
+        process|contains|all:
+            - 'Get-CimInstance '
+            - 'Win32_Process'
+            - 'Invoke-CimMethod '
+            - ' Terminate'
+    condition: selection_img and selection_psh_wmi_method or selection_img and selection_psh_cim_method
 level: low
 ---
 title: Process Termination via Wmic
@@ -86,7 +127,8 @@ name: proc_creation_win_pskill_process_termination
 status: test
 description: todo, just pskill used to terminate a process.
 references:
-    - https://research.checkpoint.com/2026/dfir-report-the-gentlemen/
+    - https://strontic.github.io/xcyclopedia/library/pskill.exe-8C1772C2D124E80526642BE3FBD2E8F3.html
+    - https://strontic.github.io/xcyclopedia/library/pskill64.exe-26EA3E520CB396587D32A7A01AA564BD.html
 author: Luc Génaux
 date: 2026-04-28
 tags:
@@ -122,6 +164,7 @@ correlation:
   rules:
     - proc_creation_win_taskkill_process_termination
     - proc_creation_win_powershell_process_termination
+    - proc_creation_win_powershell_wmi_cmdlet_process_termination
     - proc_creation_win_wmic_process_termination
     - proc_creation_win_pskill_process_termination
   group-by:
