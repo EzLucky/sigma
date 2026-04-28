@@ -84,7 +84,9 @@ level: low
 title: Suspicious Mass Process Termination
 id: 69ac960b-f469-4463-b2d3-b4396bcff935
 status: test
-description: todo, To terminate running processes, the malware repeatedly executes the following command in a loop for each targeted process.
+description: |
+    Detects a burst of activity involving a single utility used for service/process termination, suggesting potential ransomware malicious activity.
+    Ransomwares typically include lists of processes and services to be neutralized. They often attempt these actions without verifying their existence, which, through a loop over these lists, results in the creation of dozens of processes.
 references:
     - https://research.checkpoint.com/2026/dfir-report-the-gentlemen/
 author: Luc Génaux
