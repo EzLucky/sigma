@@ -1,0 +1,45 @@
+title: Service Termination or Disablement via sc
+name: proc_creation_win_sc_service_termination_or_disablement
+status: test
+description: todo, just sc used to terminate or disable a process.
+references:
+    - https://research.checkpoint.com/2026/dfir-report-the-gentlemen/
+author: Luc Génaux
+date: 2026-04-28
+tags:
+    - attack.defense-evasion
+    - attack.t1562.001
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection:
+        - CommandLine|contains|all:
+            - 'sc'
+            - ' stop '
+        - CommandLine|contains|all:
+            - 'sc'
+            - ' config '
+            - 'start=disabled'
+    condition: selection
+---
+title: Suspicious Mass Service Termination or Disablement via sc
+status: test
+description: todo, For service termination, the ransomware relies on two distinct commands...
+references:
+    - https://research.checkpoint.com/2026/dfir-report-the-gentlemen/
+author: Luc Génaux
+date: 2026-04-28
+tags:
+    - attack.defense-evasion
+    - attack.t1562.001
+correlation:
+  type: value_count
+  rules:
+    - proc_creation_win_sc_service_termination_or_disablement
+  group-by:
+    - Computer
+  timespan: 15m
+  condition:
+    gte: 10
+    field: CommandLine
