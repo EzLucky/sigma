@@ -14,10 +14,16 @@ logsource:
     product: windows
     category: process_creation
 detection:
-    selection:
-        - CommandLine|contains: 'taskkill'
-        - Image|endswith: 'taskkill.exe'
-    condition: selection
+    selection_img:
+        - OriginalFileName: 'taskkill.exe'
+        - Image|endswith: '\taskkill.exe'
+    selection_cli:
+        CommandLine|windash|contains:
+            - '/PID'
+            - '/IM'
+            - '/T'
+            - '/F'
+    condition: all of selection_*
 level: low
 ---
 title: Process Termination via PowerShell
@@ -48,7 +54,34 @@ detection:
     condition: all of selection_*
 level: low
 ---
-title: Suspicious Mass Process Termination via Taskkill
+title: Process Termination via Wmic
+id: 7e19c035-688c-439b-a200-0a71c78b74b6
+name: proc_creation_win_wmic_process_termination
+status: test
+description: todo, just wmic used to terminate a process.
+references:
+    - https://research.checkpoint.com/2026/dfir-report-the-gentlemen/
+author: Luc Génaux
+date: 2026-04-28
+tags:
+    - attack.defense-evasion
+    - attack.t1562.001
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_img:
+        - OriginalFileName: 'wmic.exe'
+        - Image|endswith: '\wmic.exe'
+    selection_cli:
+        CommandLine|contains:
+            - 'wmic'
+            - 'process'
+            - 'delete'
+    condition: all of selection_*
+level: low
+---
+title: Suspicious Mass Process Termination
 id: 69ac960b-f469-4463-b2d3-b4396bcff935
 status: test
 description: todo, To terminate running processes, the malware repeatedly executes the following command in a loop for each targeted process.
@@ -64,6 +97,7 @@ correlation:
   rules:
     - proc_creation_win_taskkill_process_termination
     - proc_creation_win_powershell_process_termination
+    - proc_creation_win_wmic_process_termination
   group-by:
     - Computer
     - Image
