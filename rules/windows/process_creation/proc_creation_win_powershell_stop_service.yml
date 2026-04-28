@@ -16,7 +16,7 @@ logsource:
     category: process_creation
     product: windows
 detection:
-    selection_sc_net_img:
+    selection_img:
         - OriginalFileName:
               - 'PowerShell.EXE'
               - 'pwsh.dll'
