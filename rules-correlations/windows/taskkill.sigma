@@ -1,4 +1,5 @@
 title: Process Termination via Taskkill
+id: 75230b4d-5434-4db1-9351-b89997d80dc1
 name: proc_creation_win_taskkill_process_termination
 status: test
 description: todo, just taskkill used to terminate a process.
@@ -21,6 +22,7 @@ detection:
     condition: selection
 ---
 title: Suspicious Mass Process Termination via Taskkill
+id: 69ac960b-f469-4463-b2d3-b4396bcff935
 status: test
 description: todo, To terminate running processes, the malware repeatedly executes the following command in a loop for each targeted process.
 references:

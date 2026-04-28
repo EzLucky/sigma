@@ -1,4 +1,5 @@
 title: Service Termination or Disablement via sc
+id: c8e11151-b606-4c1f-bc0c-4dde64562569
 name: proc_creation_win_sc_service_termination_or_disablement
 status: test
 description: todo, just sc used to terminate or disable a process.
@@ -24,6 +25,7 @@ detection:
     condition: selection
 ---
 title: Suspicious Mass Service Termination or Disablement via sc
+id: d0b60d36-35e2-4eed-8154-be948193cad3
 status: test
 description: todo, For service termination, the ransomware relies on two distinct commands...
 references:
