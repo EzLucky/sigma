@@ -13,3 +13,12 @@ TASKKILL /F /FI "PID ge 1000" /FI "WINDOWTITLE ne sans*"
 TASKKILL /F /FI "USERNAME eq AUTORITE NT\SYSTEM" /IM notepad.exe
 TASKKILL /S système /U domaine\utilisateur /FI "USERNAME ne NT*" /IM *
 TASKKILL /S système /U utilisateur /P mot_de_passe /FI "IMAGENAME eq note*"
+
+TODO rule service (currently "sc"):
+
+sc
+net
+wmic (service delete, product uninstall)
+psservice
+powershell service cmdlet
+powershell wmi/cim
